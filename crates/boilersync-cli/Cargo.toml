@@ -1,0 +1,22 @@
+[package]
+name = "boilersync-cli"
+description = "boilersync: scaffold projects from templates and keep templates alive as projects evolve"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "boilersync"
+path = "src/main.rs"
+
+[dependencies]
+boilersync-core = { path = "../boilersync-core" }
+clap.workspace = true
+log.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+serde_json.workspace = true

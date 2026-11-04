@@ -1,16 +1,26 @@
-[package]
-name = "boilersync"
+[workspace]
+resolver = "2"
+members = ["crates/boilersync-core", "crates/boilersync-cli"]
+
+[workspace.package]
 version = "0.1.0"
-edition = "2021"
-description = "Scaffold projects from templates and keep templates alive as projects evolve (Rust implementation)"
+edition = "2024"
 license = "MIT"
+repository = "https://github.com/montaguegabe/boilersync-rs"
+rust-version = "1.88"
 
-[dependencies]
-clap = { version = "4", features = ["derive"] }
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+thiserror = "2"
+log = "0.4"
+dirs = "6"
+tempfile = "3"
+minijinja = "3"
+regex = "1"
+md-5 = "0.10"
+clap = { version = "4", features = ["derive", "wrap_help"] }
 
-# Only honoured when this crate is the build root. Inside a Cargo workspace the
-# workspace root's profile applies instead.
 [profile.release]
-lto = true
-codegen-units = 1
+lto = "thin"
 strip = true
