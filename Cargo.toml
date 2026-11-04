@@ -1,0 +1,16 @@
+[package]
+name = "boilersync"
+version = "0.1.0"
+edition = "2021"
+description = "Scaffold projects from templates and keep templates alive as projects evolve (Rust implementation)"
+license = "MIT"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+
+# Only honoured when this crate is the build root. Inside a Cargo workspace the
+# workspace root's profile applies instead.
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true

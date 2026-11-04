@@ -1,0 +1,11 @@
+{
+  "template": "https://github.com/openbase-community/templates.git#rust-cli",
+  "template_commit": "f31e5c3f0cecff5b635e900b0e661c1eb3dec25c",
+  "name_snake": "boilersync",
+  "name_pretty": "BoilerSync",
+  "variables": {
+    "name_snake": "boilersync",
+    "name_pretty": "BoilerSync",
+    "description": "Scaffold projects from templates and keep templates alive as projects evolve (Rust implementation)"
+  }
+}
