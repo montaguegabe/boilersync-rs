@@ -9,9 +9,9 @@ use std::fmt;
 use std::path::Path;
 use std::sync::Arc;
 
+use minijinja::Environment;
 use minijinja::syntax::SyntaxConfig;
 use minijinja::value::{Object, Value as JinjaValue};
-use minijinja::{Environment, path_loader};
 use serde_json::Value;
 
 use crate::error::Result;
@@ -93,6 +93,9 @@ pub fn environment() -> Environment<'static> {
         .build()
         .expect("valid boilersync template syntax");
     env.set_syntax(syntax);
+    // Python string, list and dict methods (`$${name_snake.upper()}`), as
+    // templates written for Jinja2 use them.
+    env.set_unknown_method_callback(minijinja_contrib::pycompat::unknown_method_callback);
     env
 }
 
@@ -133,7 +136,19 @@ pub fn render_file_in_place(file_path: &Path, context: &Context) -> Result<()> {
     let Some(parent) = file_path.parent() else { return Ok(()) };
     let Some(name) = file_path.file_name().and_then(|n| n.to_str()) else { return Ok(()) };
     let mut env = environment();
-    env.set_loader(path_loader(parent));
+    // A plain file loader: minijinja's path loader refuses dot-files such as
+    // `.python-version`, which templates do render.
+    let parent = parent.to_path_buf();
+    env.set_loader(move |name: &str| -> std::result::Result<Option<String>, minijinja::Error> {
+        if name.contains("..") {
+            return Ok(None);
+        }
+        match std::fs::read_to_string(parent.join(name)) {
+            Ok(text) => Ok(Some(text)),
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(None),
+            Err(err) => Err(minijinja::Error::new(minijinja::ErrorKind::InvalidOperation, err.to_string())),
+        }
+    });
     let rendered = env.get_template(name).and_then(|template| template.render(context_value(context)));
     match rendered {
         Ok(text) => std::fs::write(file_path, text).map_err(|e| crate::error::Error::io(file_path, e)),
@@ -164,6 +179,29 @@ mod tests {
             "demo True False 3 1.5 {{ plain }}\n"
         );
         assert_eq!(render_string("$${% if flag %}yes$${% endif %}$${% if off %}no$${% endif %}", &ctx).unwrap(), "yes");
+    }
+
+    #[test]
+    fn supports_python_string_methods() {
+        let ctx = context(json!({"name_snake": "demo_app"}));
+        assert_eq!(
+            render_string("$${name_snake.upper()}_TOKEN $${name_snake.replace('_', '-')}", &ctx).unwrap(),
+            "DEMO_APP_TOKEN demo-app"
+        );
+    }
+
+    #[test]
+    fn renders_dot_files_in_place() {
+        let tmp = tempfile::tempdir().unwrap();
+        let file = tmp.path().join(".python-version");
+        std::fs::write(&file, "$${python_version}\n").unwrap();
+        render_file_in_place(&file, &context(json!({"python_version": "3.12"}))).unwrap();
+        assert_eq!(std::fs::read_to_string(&file).unwrap(), "3.12\n");
+        // Files that are not UTF-8 are left alone.
+        let binary = tmp.path().join("image.png");
+        std::fs::write(&binary, [0x89, b'P', b'N', b'G', 0xff, 0xfe]).unwrap();
+        render_file_in_place(&binary, &Context::new()).unwrap();
+        assert_eq!(std::fs::read(&binary).unwrap(), [0x89, b'P', b'N', b'G', 0xff, 0xfe]);
     }
 
     #[test]

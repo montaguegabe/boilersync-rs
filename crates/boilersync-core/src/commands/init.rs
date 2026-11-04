@@ -279,6 +279,10 @@ pub fn init(paths: &Paths, template_ref: &str, target_dir: &Path, options: &Init
     if let Some(Value::Object(variables)) = metadata.get("variables") {
         ctx.set_collected_variables(variables);
     }
+    // Children inherit the parent's saved variables (the original implementation
+    // shared one interpolation context across the whole init), so a child
+    // project can be pulled on its own later without re-collecting them.
+    let parent_variables = ctx.get_collected_variables();
     let mut runtime_context = ctx.get_context();
     if let Some(extra) = &options.options {
         for (key, value) in extra {
@@ -340,7 +344,7 @@ pub fn init(paths: &Paths, template_ref: &str, target_dir: &Path, options: &Init
 
             let child_template_ref = resolve_relative_ref(template_ref, &child_template_name, "child")?;
             let child_options = InitOptions {
-                collected_variables: None,
+                collected_variables: Some(parent_variables.clone()),
                 template_variables: if child_variables.is_empty() { None } else { Some(child_variables) },
                 options: options.options.clone(),
                 no_input: options.no_input,

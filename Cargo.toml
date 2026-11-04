@@ -17,6 +17,7 @@ log = "0.4"
 dirs = "6"
 tempfile = "3"
 minijinja = "3"
+minijinja-contrib = { version = "3", features = ["pycompat"] }
 regex = "1"
 md-5 = "0.10"
 clap = { version = "4", features = ["derive", "wrap_help"] }
