@@ -1,11 +1,11 @@
-//! Install the BoilerSync agent skills.
+//! Install the Boilersync agent skills.
 //!
 //! `boilersync skills install` copies the published skills with the skills.sh
 //! installer (`npx skills add`). With `dev` it instead runs the skills repo's
 //! own `scripts/install-dev.sh`, which symlinks the checked-out skills into
 //! `~/.agents/skills` and `~/.claude/skills` so edits are live for Codex and
 //! Claude Code. The symlink logic lives in that script, shared by every skills
-//! repo made from the BoilerSync `skills` template; this module only finds the
+//! repo made from the Boilersync `skills` template; this module only finds the
 //! repo and runs it.
 
 use std::path::{Path, PathBuf};

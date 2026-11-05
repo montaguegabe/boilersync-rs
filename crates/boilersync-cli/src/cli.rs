@@ -19,7 +19,7 @@ use boilersync_core::paths::Paths;
 use boilersync_core::variables::parse_key_value_options;
 use clap::{Args, Parser, Subcommand};
 
-/// BoilerSync - a template CLI that generates projects and keeps templates
+/// Boilersync - a template CLI that generates projects and keeps templates
 /// updated as derived projects evolve.
 #[derive(Parser, Debug)]
 #[command(name = "boilersync", version, about, long_about = None)]
@@ -58,7 +58,7 @@ pub enum Command {
     /// files (.starter) are excluded unless --include-starter is given. Child
     /// projects listed in .boilersync are updated too unless --no-children.
     Pull(PullArgs),
-    /// Create and apply reviewable BoilerSync pull proposals.
+    /// Create and apply reviewable Boilersync pull proposals.
     #[command(subcommand)]
     PullProposal(PullProposalCommand),
     /// Show differences between the project and its template, then copy
@@ -72,7 +72,7 @@ pub enum Command {
     /// Manage local template source cache configuration and setup.
     #[command(subcommand)]
     Templates(TemplatesCommand),
-    /// Manage the BoilerSync agent skills.
+    /// Manage the Boilersync agent skills.
     #[command(subcommand)]
     Skills(SkillsCommand),
 }
@@ -200,7 +200,7 @@ pub enum TemplatesCommand {
 
 #[derive(Subcommand, Debug)]
 pub enum SkillsCommand {
-    /// Install the BoilerSync skills for Codex and Claude Code.
+    /// Install the Boilersync skills for Codex and Claude Code.
     ///
     /// Without --dev this runs `npx skills add` for the published skills. With
     /// --dev it runs the skills repo's scripts/install-dev.sh, which symlinks
@@ -277,7 +277,7 @@ pub fn run(cli: &Cli) -> Result<Outcome> {
             if let Some(output_path) = &args.output_path {
                 let output_path = boilersync_core::fsx::expanduser(&output_path.display().to_string());
                 std::fs::write(&output_path, format!("{result}\n")).map_err(|e| Error::io(&output_path, e))?;
-                println!("Wrote BoilerSync diff to {}", output_path.display());
+                println!("Wrote Boilersync diff to {}", output_path.display());
             } else {
                 println!("{result}");
             }

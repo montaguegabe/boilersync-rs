@@ -215,7 +215,7 @@ pub fn copy_changed_files_to_template(
     }
     if !blocked.is_empty() {
         return Err(Error::Runtime(format!(
-            "Refusing to push files derived from block-based template sources because BoilerSync cannot safely reconstruct the block structure:\n{}",
+            "Refusing to push files derived from block-based template sources because Boilersync cannot safely reconstruct the block structure:\n{}",
             blocked.join("\n")
         )));
     }

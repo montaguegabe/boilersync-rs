@@ -1,6 +1,6 @@
 # Template Metadata (`template.json`)
 
-BoilerSync templates must include a `template.json` file at the template root.
+Boilersync templates must include a `template.json` file at the template root.
 
 ## Overview
 
@@ -112,7 +112,7 @@ Notes:
 
 - `variables` are also auto-discovered from `$${...}` usage in template files and `NAME_*` path placeholders.
 - Built-in naming variables such as `name_snake` and `name_pretty` are exposed through the normal variable/input flow.
-- If neither `--var name_snake=...` nor saved project metadata provides a name, BoilerSync infers `name_snake` from the target directory name.
+- If neither `--var name_snake=...` nor saved project metadata provides a name, Boilersync infers `name_snake` from the target directory name.
 - A trailing `-workspace` / `_workspace` suffix is stripped during default project-name inference. For example, `woo-score-workspace` defaults to `name_snake=woo_score`.
 
 Relative `extends` values are resolved within the same template source repository. Example:
@@ -130,7 +130,7 @@ When used from `acme/templates#cli`, this resolves to `acme/templates#pip-packag
 - Type: object keyed by interpolation variable name.
 - Purpose: Provide template-owned defaults before missing-variable collection.
 - Values: Scalars, arrays, and objects. String values support `$${...}` interpolation.
-- Precedence: Existing values win. BoilerSync does not overwrite values from explicit `--var` flags, saved `.boilersync` project metadata, or defaults already applied by an earlier template in the inheritance chain.
+- Precedence: Existing values win. Boilersync does not overwrite values from explicit `--var` flags, saved `.boilersync` project metadata, or defaults already applied by an earlier template in the inheritance chain.
 - Persistence: Applied defaults are saved in generated project `.boilersync` metadata under `variables`.
 
 Example:
@@ -159,9 +159,9 @@ boilersync init acme/templates#django-react-workspace --non-interactive
 
 ### Automatic Environment Defaults
 
-BoilerSync can populate a small set of variables from the local environment before prompting:
+Boilersync can populate a small set of variables from the local environment before prompting:
 
-- `github_user`: when a template references this variable and no value is already set, BoilerSync runs `gh api user --jq .login`.
+- `github_user`: when a template references this variable and no value is already set, Boilersync runs `gh api user --jq .login`.
 
 If automatic lookup fails, the variable remains missing. Interactive init prompts for it, while `--non-interactive` fails and asks for an explicit `--var github_user=...`.
 
@@ -202,4 +202,4 @@ If automatic lookup fails, the variable remains missing. Interactive init prompt
 ### `skip_git`
 
 - Type: boolean.
-- Purpose: If `true` on any template in the inheritance chain, BoilerSync skips git initialization in generated projects.
+- Purpose: If `true` on any template in the inheritance chain, Boilersync skips git initialization in generated projects.

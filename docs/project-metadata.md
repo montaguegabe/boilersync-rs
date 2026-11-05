@@ -1,10 +1,10 @@
 # Project Metadata (`.boilersync`)
 
-BoilerSync writes a `.boilersync` file in the project root after `boilersync init` and `boilersync pull`.
+Boilersync writes a `.boilersync` file in the project root after `boilersync init` and `boilersync pull`.
 
 This file is the source of truth for template provenance and saved interpolation inputs.
 
-BoilerSync writes this file as indented JSON with a trailing newline.
+Boilersync writes this file as indented JSON with a trailing newline.
 
 ## Schema
 
@@ -30,7 +30,7 @@ BoilerSync writes this file as indented JSON with a trailing newline.
 - Notes:
   - GitHub host is required.
   - `<template_subdir>` is required and cannot be empty.
-  - BoilerSync canonicalizes this value to include `.git` when writing the file.
+  - Boilersync canonicalizes this value to include `.git` when writing the file.
   - The source repository is resolved/cloned at:
     - `${BOILERSYNC_TEMPLATE_DIR:-~/.boilersync/templates}/<org>/<repo>`
 
@@ -51,7 +51,7 @@ BoilerSync writes this file as indented JSON with a trailing newline.
 - Type: `string`
 - Purpose: the source template repository commit that the project last pulled from.
 - Notes:
-  - BoilerSync records the current HEAD commit of the cached template repository.
+  - Boilersync records the current HEAD commit of the cached template repository.
   - `boilersync check-pull` compares this stored commit against the current cached template repo HEAD.
   - Older projects may not have this field until they run `boilersync pull` again.
 
@@ -67,12 +67,12 @@ BoilerSync writes this file as indented JSON with a trailing newline.
 ### `children` (optional)
 
 - Type: `string[]`
-- Purpose: relative paths to explicit child BoilerSync projects.
+- Purpose: relative paths to explicit child Boilersync projects.
 - Notes:
   - Paths are relative to the directory containing `.boilersync`.
   - Field is present when child projects are registered.
   - Parent diffs exclude registered child paths so each template instantiation is compared against its own upstream template.
-  - BoilerSync does not infer children from framework conventions, package names, or folder names. Unregistered extra folders remain part of the parent project diff.
+  - Boilersync does not infer children from framework conventions, package names, or folder names. Unregistered extra folders remain part of the parent project diff.
 
 ## Validation Rules
 

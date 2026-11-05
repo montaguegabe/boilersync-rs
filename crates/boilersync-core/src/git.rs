@@ -44,7 +44,7 @@ pub fn is_inside_work_tree(dir: &Path) -> bool {
 /// `git init` with a fixed boilersync identity, for scratch repositories.
 pub fn init_scratch_repo(dir: &Path) -> Result<()> {
     git(dir, &["init", "-q"])?;
-    git(dir, &["config", "user.name", "BoilerSync"])?;
+    git(dir, &["config", "user.name", "Boilersync"])?;
     git(dir, &["config", "user.email", "boilersync@example.invalid"])?;
     git(dir, &["config", "commit.gpgsign", "false"])?;
     Ok(())

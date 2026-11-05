@@ -1,4 +1,4 @@
-# BoilerSync
+# Boilersync
 
 `boilersync` is a Rust command-line tool built with clap (derive API).
 

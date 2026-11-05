@@ -55,7 +55,7 @@ pub fn create_pull_proposal(
     fsx::recreate_dir(&proposal_dir)?;
     copy_project_files_to_directory(&project_dir, &proposal_dir, &[])?;
     git::init_scratch_repo(&proposal_dir)?;
-    git::commit_all(&proposal_dir, "Current project before BoilerSync pull")?;
+    git::commit_all(&proposal_dir, "Current project before Boilersync pull")?;
 
     let project_context = resolve_project_template_context(paths, &proposal_dir)?;
     let mut collected_variables = project_context.variables.clone();

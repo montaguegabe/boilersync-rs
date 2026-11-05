@@ -69,7 +69,7 @@ boilersync push
 | `boilersync templates list [--json]` | List cached templates |
 | `boilersync templates sources [--json]` | Show cached source checkouts and duplicate remotes |
 | `boilersync templates details TEMPLATE_REF [--json]` | Show the effective inputs of a template after inheritance |
-| `boilersync skills install [--dev] [--source PATH] [--skill NAME]...` | Install the BoilerSync agent skills for Codex and Claude Code |
+| `boilersync skills install [--dev] [--source PATH] [--skill NAME]...` | Install the Boilersync agent skills for Codex and Claude Code |
 
 Every command accepts `--verbose`.
 

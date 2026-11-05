@@ -91,7 +91,7 @@ impl Fixture {
 pub fn commit_template_repo(repo_dir: &Path) -> String {
     if !repo_dir.join(".git").is_dir() {
         git(repo_dir, &["init", "-q"]);
-        git(repo_dir, &["config", "user.name", "BoilerSync Tests"]);
+        git(repo_dir, &["config", "user.name", "Boilersync Tests"]);
         git(repo_dir, &["config", "user.email", "tests@example.invalid"]);
         git(repo_dir, &["config", "commit.gpgsign", "false"]);
     }
