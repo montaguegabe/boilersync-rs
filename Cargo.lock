@@ -92,6 +92,7 @@ name = "boilersync-core"
 version = "0.1.0"
 dependencies = [
  "dirs",
+ "libc",
  "log",
  "md-5",
  "minijinja",
