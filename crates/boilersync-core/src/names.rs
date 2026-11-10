@@ -45,14 +45,10 @@ pub fn normalize_to_snake(name: &str) -> String {
 /// `_workspace` suffix.
 pub fn default_project_snake_from_directory_name(directory_name: &str) -> String {
     let snake = normalize_to_snake(directory_name);
-    for suffix in ["_workspace"] {
-        if let Some(stem) = snake.strip_suffix(suffix)
-            && !stem.is_empty()
-        {
-            return stem.to_string();
-        }
+    match snake.strip_suffix("_workspace") {
+        Some(stem) if !stem.is_empty() => stem.to_string(),
+        _ => snake,
     }
-    snake
 }
 
 pub fn snake_to_pascal(snake: &str) -> String {
