@@ -1,0 +1,30 @@
+[build-system]
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "boilersync"
+description = "Boilersync: scaffold projects from templates and keep templates alive as projects evolve"
+readme = "README.md"
+authors = [{ name = "Gabe Montague", email = "gabemontague@outlook.com" }]
+requires-python = ">=3.8"
+license = "MIT"
+license-files = ["LICENSE"]
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Programming Language :: Rust",
+    "Topic :: Software Development :: Version Control :: Git",
+]
+
+[project.urls]
+Repository = "https://github.com/montaguegabe/boilersync-rs"
+Issues = "https://github.com/montaguegabe/boilersync-rs/issues"
+
+# The wheel ships the Rust `boilersync` binary; there is no Python code.
+[tool.maturin]
+bindings = "bin"
+manifest-path = "crates/boilersync-cli/Cargo.toml"
+strip = true

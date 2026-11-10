@@ -13,6 +13,14 @@ This repository is the Rust implementation of boilersync. It is a successor to t
 
 ## Installation
 
+The `boilersync` PyPI package ships the prebuilt binary for macOS, Linux and Windows (no Python code runs; Python is only the package manager):
+
+```bash
+uv tool install boilersync   # or: pip install boilersync
+```
+
+Version 2.0.0 and later is this Rust implementation; 1.x was the retired Python one. With a Rust toolchain:
+
 ```bash
 cargo install --git https://github.com/montaguegabe/boilersync-rs boilersync-cli
 ```
